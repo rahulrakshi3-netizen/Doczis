@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.doczis.app.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/toolsFragment"
+        android:name="com.doczis.app.ui.tools.ToolsFragment"
+        android:label="Tools"
+        tools:layout="@layout/fragment_tools" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.doczis.app.ui.settings.SettingsFragment"
+        android:label="Settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <fragment
+        android:id="@+id/imageToPdfFragment"
+        android:name="com.doczis.app.ui.imagetopdf.ImageToPdfFragment"
+        android:label="Image to PDF"
+        tools:layout="@layout/fragment_image_to_pdf" />
+
+    <fragment
+        android:id="@+id/reorderPagesFragment"
+        android:name="com.doczis.app.ui.reorderpages.ReorderPagesFragment"
+        android:label="Reorder Pages"
+        tools:layout="@layout/fragment_reorder_pages" />
+
+    <fragment
+        android:id="@+id/deletePagesFragment"
+        android:name="com.doczis.app.ui.deletepages.DeletePagesFragment"
+        android:label="Delete Pages"
+        tools:layout="@layout/fragment_delete_pages" />
+
+    <fragment
+        android:id="@+id/compressFragment"
+        android:name="com.doczis.app.ui.compress.CompressFragment"
+        android:label="Compress"
+        tools:layout="@layout/fragment_compress" />
+
+    <fragment
+        android:id="@+id/convertFragment"
+        android:name="com.doczis.app.ui.convert.ConvertFragment"
+        android:label="Convert"
+        tools:layout="@layout/fragment_convert" />
+
+    <fragment
+        android:id="@+id/splitFragment"
+        android:name="com.doczis.app.ui.split.SplitFragment"
+        android:label="Split"
+        tools:layout="@layout/fragment_split" />
+
+    <fragment
+        android:id="@+id/mergeFragment"
+        android:name="com.doczis.app.ui.merge.MergeFragment"
+        android:label="Merge"
+        tools:layout="@layout/fragment_merge" />
+
+    <fragment
+        android:id="@+id/ocrFragment"
+        android:name="com.doczis.app.ui.ocr.OcrFragment"
+        android:label="OCR"
+        tools:layout="@layout/fragment_ocr" />
+</navigation>
