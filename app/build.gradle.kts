@@ -55,9 +55,7 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     kapt(libs.room.compiler)
-    implementation(libs.pdfbox) {
-        exclude(group = "org.junit.jupiter")
-    }
+    implementation(libs.pdfbox.android)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.gridlayout)
     implementation(libs.viewpager2)

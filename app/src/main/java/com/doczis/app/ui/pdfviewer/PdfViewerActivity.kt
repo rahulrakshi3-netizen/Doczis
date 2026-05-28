@@ -27,6 +27,7 @@ import com.doczis.app.util.ErrorHandler
 import com.doczis.app.util.FileSaveManager
 import com.doczis.app.util.MemoryMonitor
 import com.doczis.app.util.NotificationHelper
+import com.tom_roush.pdfbox.pdmodel.PDDocument
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -115,20 +116,79 @@ class PdfViewerActivity : AppCompatActivity() {
                 }.onFailure { error ->
                     withContext(Dispatchers.Main) {
                         binding.progressOverlay.isVisible = false
-                        val msg = ErrorHandler.handleFileOpenError(this@PdfViewerActivity, error)
-                        Toast.makeText(this@PdfViewerActivity, msg, Toast.LENGTH_LONG).show()
-                        fallbackToExternalViewer(uri)
-                        finish()
+                        if (error is SecurityException) {
+                            showPasswordDialog(uri)
+                        } else {
+                            val msg = ErrorHandler.handleFileOpenError(this@PdfViewerActivity, error)
+                            Toast.makeText(this@PdfViewerActivity, msg, Toast.LENGTH_LONG).show()
+                            finish()
+                        }
                     }
                 }
             } catch (e: Exception) {
                 binding.progressOverlay.isVisible = false
                 ErrorHandler.logError("loadPdf", e)
                 Toast.makeText(this@PdfViewerActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
-                fallbackToExternalViewer(uri)
                 finish()
             }
         }
+    }
+
+    private fun showPasswordDialog(uri: Uri) {
+        val input = EditText(this).apply {
+            hint = "Enter PDF password"
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        AlertDialog.Builder(this)
+            .setTitle("Password Required")
+            .setMessage("This PDF is password-protected")
+            .setView(input)
+            .setPositiveButton("Open") { _, _ ->
+                val password = input.text.toString()
+                if (password.isBlank()) {
+                    showPasswordDialog(uri)
+                    return@setPositiveButton
+                }
+                decryptAndOpen(uri, password)
+            }
+            .setNegativeButton("Cancel") { _, _ -> finish() }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun decryptAndOpen(uri: Uri, password: String) {
+        binding.progressOverlay.isVisible = true
+        lifecycleScope.launch {
+            try {
+                val decryptedFile = withContext(Dispatchers.IO) {
+                    decryptPdf(uri, password)
+                }
+                val fileUri = FileProvider.getUriForFile(this@PdfViewerActivity, "${packageName}.fileprovider", decryptedFile)
+                loadPdfAsync(fileUri)
+            } catch (e: Exception) {
+                binding.progressOverlay.isVisible = false
+                ErrorHandler.logError("decryptPdf", e)
+                val msg = when {
+                    e.message?.contains("password", true) == true -> "Incorrect password"
+                    else -> "Could not open: ${e.message}"
+                }
+                Toast.makeText(this@PdfViewerActivity, msg, Toast.LENGTH_LONG).show()
+                showPasswordDialog(uri)
+            }
+        }
+    }
+
+    private fun decryptPdf(uri: Uri, password: String): File {
+        val tempFile = File(cacheDir, "decrypt_${System.nanoTime()}.pdf")
+        contentResolver.openInputStream(uri)?.use { input ->
+            FileOutputStream(tempFile).use { output -> input.copyTo(output) }
+        } ?: throw Exception("Cannot read file")
+
+        val doc = PDDocument.load(tempFile, password)
+        doc.setAllSecurityToBeRemoved(true)
+        doc.save(tempFile)
+        doc.close()
+        return tempFile
     }
 
     private data class PdfLoadResult(
@@ -451,20 +511,6 @@ class PdfViewerActivity : AppCompatActivity() {
         WindowInsetsControllerCompat(window, window.decorView).let { ctrl ->
             ctrl.hide(WindowInsetsCompat.Type.systemBars())
             ctrl.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        }
-    }
-
-    private fun fallbackToExternalViewer(uri: Uri) {
-        try {
-            val externalUri = if (uri.scheme == "content") uri
-            else FileProvider.getUriForFile(this, "${packageName}.fileprovider", File(uri.path!!))
-            val intent = Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(externalUri, "application/pdf")
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            }
-            startActivity(Intent.createChooser(intent, "Open PDF with"))
-        } catch (_: Exception) {
-            finish()
         }
     }
 }

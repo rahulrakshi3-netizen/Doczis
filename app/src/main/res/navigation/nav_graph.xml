@@ -70,4 +70,29 @@
         android:name="com.doczis.app.ui.ocr.OcrFragment"
         android:label="OCR"
         tools:layout="@layout/fragment_ocr" />
+
+    <fragment
+        android:id="@+id/protectPdfFragment"
+        android:name="com.doczis.app.ui.protectpdf.ProtectPdfFragment"
+        android:label="Protect PDF"
+        tools:layout="@layout/fragment_protect_pdf" />
+
+    <fragment
+        android:id="@+id/unprotectPdfFragment"
+        android:name="com.doczis.app.ui.unprotectpdf.UnprotectPdfFragment"
+        android:label="Unprotect PDF"
+        tools:layout="@layout/fragment_unprotect_pdf" />
+
+    <fragment
+        android:id="@+id/watermarkFragment"
+        android:name="com.doczis.app.ui.watermark.WatermarkFragment"
+        android:label="Watermark"
+        tools:layout="@layout/fragment_watermark" />
+
+    <fragment
+        android:id="@+id/signPdfFragment"
+        android:name="com.doczis.app.ui.signpdf.SignPdfFragment"
+        android:label="Sign PDF"
+        tools:layout="@layout/fragment_sign_pdf" />
+
 </navigation>
