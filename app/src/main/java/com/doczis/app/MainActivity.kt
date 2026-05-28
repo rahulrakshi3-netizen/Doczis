@@ -17,6 +17,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import com.doczis.app.databinding.ActivityMainBinding
 import com.doczis.app.ui.home.HomeViewModel
+import com.doczis.app.util.UpdateChecker
 
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -88,6 +89,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         requestNotificationPermission()
+        UpdateChecker.check(this, this)
     }
 
     private fun requestNotificationPermission() {
