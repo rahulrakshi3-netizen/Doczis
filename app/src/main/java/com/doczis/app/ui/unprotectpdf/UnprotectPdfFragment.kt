@@ -51,11 +51,11 @@ class UnprotectPdfFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.selectPdfButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             filePicker.launch(arrayOf("application/pdf"))
         }
         binding.unprotectButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             startUnprotect()
         }
     }

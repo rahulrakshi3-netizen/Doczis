@@ -77,7 +77,7 @@ class PdfViewerActivity : AppCompatActivity() {
                     pageCount = heights.size
                     fileName = FileSaveManager.getFileName(this@PdfViewerActivity, uri, "PDF")
 
-                    val safeTotalH = totalH.coerceAtMost(14000)
+                    val safeTotalH = totalH.coerceAtMost(8000)
 
                     val bigBitmap = withContext(Dispatchers.IO) {
                         try {
@@ -237,7 +237,7 @@ class PdfViewerActivity : AppCompatActivity() {
             page.close()
         }
 
-        val maxCompositePixels = 2160 * 10000
+        val maxCompositePixels = 1080 * 6000
         val adjustedScale: Float
         val renderW: Int
 
@@ -271,11 +271,12 @@ class PdfViewerActivity : AppCompatActivity() {
         val renderer = renderer ?: throw IllegalStateException("Renderer not initialized")
         val pagesToRender = heights.size
 
+        val bitmapConfig = Bitmap.Config.RGB_565
         val bigBitmap: Bitmap = try {
-            Bitmap.createBitmap(renderW, safeTotalH, Bitmap.Config.ARGB_8888)
+            Bitmap.createBitmap(renderW, safeTotalH, bitmapConfig)
         } catch (e: Exception) {
             ErrorHandler.logError("createBigBitmap", e)
-            Bitmap.createBitmap(renderW.coerceAtMost(720), safeTotalH.coerceAtMost(4000), Bitmap.Config.ARGB_8888)
+            Bitmap.createBitmap(renderW.coerceAtMost(720), safeTotalH.coerceAtMost(2000), bitmapConfig)
         }
         val canvas = Canvas(bigBitmap)
         val paint = Paint().apply { isFilterBitmap = true }
@@ -289,7 +290,7 @@ class PdfViewerActivity : AppCompatActivity() {
             var pageBitmap: Bitmap? = null
             try {
                 val page = renderer.openPage(i) ?: continue
-                pageBitmap = Bitmap.createBitmap(renderW, pageH, Bitmap.Config.ARGB_8888)
+                pageBitmap = Bitmap.createBitmap(renderW, pageH, Bitmap.Config.RGB_565)
                 page.render(pageBitmap, null, null, 1)
                 page.close()
 
@@ -424,7 +425,7 @@ class PdfViewerActivity : AppCompatActivity() {
     }
 
     private fun saveToDownloads() {
-        if (Debounce.isDuplicate()) return
+        if (Debounce.isDuplicate(binding.moreButton)) return
         val file = currentFile ?: return
         lifecycleScope.launch {
             try {

@@ -50,7 +50,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     fun saveRecentFile(fileName: String, filePath: String, fileSize: Long) {
         viewModelScope.launch {
             val existing = repository.findByFileName(fileName)
-            if (existing != null) return@launch
+            if (existing != null) {
+                repository.update(existing.id, fileName, filePath)
+                return@launch
+            }
             repository.insert(
                 com.doczis.app.data.db.FileEntity(
                     fileName = fileName,

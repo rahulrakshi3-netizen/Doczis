@@ -53,11 +53,11 @@ class ProtectPdfFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.selectPdfButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             filePicker.launch(arrayOf("application/pdf"))
         }
         binding.protectButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             startProtect()
         }
     }
@@ -142,9 +142,9 @@ class ProtectPdfFragment : Fragment() {
 
         val doc = PDDocument.load(file)
         val permission = AccessPermission()
+        permission.setCanPrint(false)
         permission.setCanModify(false)
         permission.setCanExtractContent(false)
-        permission.setCanPrint(true)
         permission.setCanAssembleDocument(false)
         permission.setCanModifyAnnotations(false)
         permission.setCanFillInForm(false)

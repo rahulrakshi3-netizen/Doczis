@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#4F46E5</color>
-    <color name="primary_variant">#6366F1</color>
-    <color name="primary_dark">#4338CA</color>
-    <color name="secondary">#7C3AED</color>
-    <color name="primary_container">#EEF2FF</color>
-    <color name="background">#F8F9FC</color>
+    <color name="primary">#059669</color>
+    <color name="primary_variant">#10B981</color>
+    <color name="primary_dark">#047857</color>
+    <color name="secondary">#4F46E5</color>
+    <color name="primary_container">#F0FDF4</color>
+    <color name="background">#FAFAF8</color>
     <color name="surface">#FFFFFF</color>
-    <color name="surface_dark">#0D0D0F</color>
-    <color name="surface_card_dark">#1A1A1E</color>
+    <color name="surface_dark">#0C0C0E</color>
+    <color name="surface_card_dark">#18181B</color>
     <color name="on_primary">#FFFFFF</color>
     <color name="on_secondary">#FFFFFF</color>
-    <color name="on_background">#1E1E2E</color>
-    <color name="on_surface">#1E1E2E</color>
-    <color name="card_background">#F8FAFF</color>
+    <color name="on_background">#1E293B</color>
+    <color name="on_surface">#1E293B</color>
+    <color name="card_background">#FFFFFF</color>
     <color name="icon_tint">#64748B</color>
     <color name="success_green">#10B981</color>
     <color name="error_red">#EF4444</color>
     <color name="warning_orange">#F59E0B</color>
-    <color name="text_secondary">#94A3B8</color>
+    <color name="text_secondary">#64748B</color>
     <color name="frost_white">#0DFFFFFF</color>
     <color name="frost_dark">#08000000</color>
     <color name="shimmer_highlight">#33FFFFFF</color>
     <color name="shimmer_base">#0DFFFFFF</color>
-    <color name="ic_launcher_background">#0D0D0F</color>
-    <color name="surface_variant">#F1F5F9</color>
+    <color name="ic_launcher_background">#0C0C0E</color>
+    <color name="surface_variant">#F0FDF4</color>
 </resources>

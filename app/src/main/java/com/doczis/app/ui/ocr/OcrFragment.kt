@@ -57,7 +57,7 @@ class OcrFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.selectImageButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             imagePicker.launch("image/*")
         }
         binding.copyButton.setOnClickListener {
@@ -66,7 +66,7 @@ class OcrFragment : Fragment() {
             Toast.makeText(requireContext(), "Copied", Toast.LENGTH_SHORT).show()
         }
         binding.saveButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             saveText()
         }
     }

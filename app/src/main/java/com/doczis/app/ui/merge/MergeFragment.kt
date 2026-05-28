@@ -55,11 +55,11 @@ class MergeFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.addFab.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             filePicker.launch(arrayOf("application/pdf"))
         }
         binding.mergeButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             startMerge()
         }
 

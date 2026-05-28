@@ -62,11 +62,11 @@ class CompressFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.selectFileButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             filePicker.launch(arrayOf("application/pdf", "image/*"))
         }
         binding.compressButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             startCompress()
         }
     }

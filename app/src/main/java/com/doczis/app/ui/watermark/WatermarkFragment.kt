@@ -59,14 +59,14 @@ class WatermarkFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.selectPdfButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             filePicker.launch(arrayOf("application/pdf"))
         }
         binding.opacitySlider.addOnChangeListener { _, value, _ ->
             binding.opacityLabel.text = "${(value * 100).toInt()}% opacity"
         }
         binding.watermarkButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             startWatermark()
         }
     }

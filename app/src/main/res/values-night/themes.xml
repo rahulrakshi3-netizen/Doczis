@@ -7,10 +7,16 @@
         <item name="colorOnPrimary">@color/on_primary</item>
         <item name="colorOnSecondary">@color/on_secondary</item>
         <item name="android:colorBackground">@color/surface_dark</item>
-        <item name="colorSurface">#1A1A1E</item>
-        <item name="colorOnBackground">#E6E1E5</item>
-        <item name="colorOnSurface">#E6E1E5</item>
-        <item name="colorPrimaryContainer">#1A3A6A</item>
+        <item name="colorSurface">@color/surface_card_dark</item>
+        <item name="colorOnBackground">#F8FAFC</item>
+        <item name="colorOnSurface">#F8FAFC</item>
+        <item name="colorPrimaryContainer">#064E3B</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Doczis.Splash" parent="Theme.Doczis">
+        <item name="android:windowBackground">#0C0C0E</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>

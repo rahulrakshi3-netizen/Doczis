@@ -71,11 +71,11 @@ class DeletePagesFragment : Fragment() {
         }
 
         binding.selectPdfButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             pdfPicker.launch(arrayOf("application/pdf"))
         }
         binding.saveButton.setOnClickListener {
-            if (!Debounce.isDuplicate()) savePdf()
+            if (!Debounce.isDuplicate(it)) savePdf()
         }
     }
 

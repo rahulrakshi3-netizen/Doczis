@@ -57,14 +57,14 @@ class SignPdfFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.selectPdfButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             filePicker.launch(arrayOf("application/pdf"))
         }
         binding.clearButton.setOnClickListener {
             binding.signaturePad.clear()
         }
         binding.signButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             if (binding.signaturePad.getSignatureBitmap() == null) {
                 Toast.makeText(requireContext(), "Draw a signature first", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener

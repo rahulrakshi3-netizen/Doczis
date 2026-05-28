@@ -56,7 +56,7 @@ class ConvertFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.selectPdfButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             filePicker.launch(arrayOf("application/pdf"))
         }
         binding.selectAllButton.setOnClickListener {
@@ -68,7 +68,7 @@ class ConvertFragment : Fragment() {
             adapter?.notifyItemRangeChanged(0, adapter?.itemCount ?: 0)
         }
         binding.convertButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             startConvert()
         }
     }

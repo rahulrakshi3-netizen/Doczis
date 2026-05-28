@@ -8,7 +8,7 @@ class SettingsManager(context: Context) {
     private val prefs = context.getSharedPreferences("doczis_settings", Context.MODE_PRIVATE)
 
     var isDarkMode: Boolean
-        get() = prefs.getBoolean(KEY_DARK_MODE, true)
+        get() = prefs.getBoolean(KEY_DARK_MODE, false)
         set(value) {
             prefs.edit().putBoolean(KEY_DARK_MODE, value).apply()
             AppCompatDelegate.setDefaultNightMode(

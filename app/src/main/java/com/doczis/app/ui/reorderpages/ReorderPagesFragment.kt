@@ -73,11 +73,11 @@ class ReorderPagesFragment : Fragment() {
         }
 
         binding.selectPdfButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             pdfPicker.launch(arrayOf("application/pdf"))
         }
         binding.saveButton.setOnClickListener {
-            if (!Debounce.isDuplicate()) saveReorderedPdf()
+            if (!Debounce.isDuplicate(it)) saveReorderedPdf()
         }
     }
 

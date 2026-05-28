@@ -53,11 +53,11 @@ class ImageToPdfFragment : Fragment() {
 
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
         binding.pickButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             imagePicker.launch("image/*")
         }
         binding.createButton.setOnClickListener {
-            if (Debounce.isDuplicate()) return@setOnClickListener
+            if (Debounce.isDuplicate(it)) return@setOnClickListener
             if (selectedImages.isNotEmpty()) createPdf()
         }
     }
@@ -156,7 +156,15 @@ class ImageToPdfFragment : Fragment() {
 
             if (document.pages.isEmpty()) throw Exception("No valid images could be processed")
             val uri = FileSaveManager.savePdfDocumentToDownloads(requireContext(), document, fileName)
-            return Triple(fileName, uri.getOrThrow().toString(), -1L)
+            val fileUri = uri.getOrThrow()
+            val fileSize = try {
+                val cursor = requireContext().contentResolver.query(fileUri, null, null, null, null)
+                cursor?.use {
+                    val sizeIdx = it.getColumnIndex(android.provider.OpenableColumns.SIZE)
+                    if (sizeIdx >= 0 && it.moveToFirst()) it.getLong(sizeIdx) else -1L
+                } ?: -1L
+            } catch (_: Exception) { -1L }
+            return Triple(fileName, fileUri.toString(), fileSize)
         } finally {
             if (document.pages.isNotEmpty()) document.close()
         }
